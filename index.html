@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>index</title>
+  <meta name="author" content="Tom Gooding" />
+  <meta name="dcterms.date" content="2026-06-12" />
+  <title>Creating a website with pandoc</title>
   <style>
     html {
       color: #1a1a1a;
@@ -169,15 +171,32 @@
   </style>
 </head>
 <body>
+<header id="title-block-header">
+<h1 class="title">Creating a website with pandoc</h1>
+<p class="author">Tom Gooding</p>
+<p class="date">2026-06-12</p>
+</header>
+<h2 id="getting-started">Getting started</h2>
 <ol type="1">
-<li>Create your <a
+<li><p>Create your <a
 href="https://docs.github.com/en/pages/quickstart">GitHub Pages
-website</a></li>
-<li>Add an empty <code>.nojekyll</code> file to bypass Jekyll
-processing</li>
-<li>Create <code>index.md</code> with markdown content</li>
-<li>Convert to html:
-<code>pandoc index.md -o index.html --standalone</code></li>
+website</a></p></li>
+<li><p>Add an empty <code>.nojekyll</code> file to bypass Jekyll
+processing</p></li>
+<li><p>Create <code>index.md</code> with markdown content</p></li>
+<li><p>Convert to html:
+<code>pandoc index.md -o index.html --standalone</code></p></li>
+<li><p>Print the default html template with <code>pandoc -D html</code>.
+Notice the use of variables like title, author, date, etc.</p></li>
+<li><p>Add a metadata block at the top of <code>index.md</code>. For
+example:</p>
+<pre><code>---
+title: &quot;Creating a website with pandoc&quot;
+date: 2026-06-12
+---</code></pre></li>
+<li><p>Metadata can also be set on the command line with the
+<code>-M/--metadata</code> option. For example:
+<code>--metadata=lang:en --metadata=author:"Tom Gooding"</code></p></li>
 </ol>
 </body>
 </html>
