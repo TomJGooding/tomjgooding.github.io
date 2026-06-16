@@ -34,8 +34,27 @@ date: 2026-06-12
 
 2. Edit `template.html` and remove the `<style>` block
 3. Create `style.css` with your custom stylesheet
-4. Generate HTML using the custom template and CSS:
+4. Generate the HTML using the custom template and CSS stylesheet:
 
    ```
    pandoc index.md -o index.html --standalone --template template.html --css style.css
    ```
+
+## Add header and footer
+
+1. The `--include-before-body` and `--include-after-body` options
+   can be used to add a site header and footer
+2. Create `footer.html` with HTML content. For example:
+
+   ```html
+   <footer style="margin-top: 4em; text-align: center;">
+       <hr>
+       <p>Generated with pandoc</p>
+   </footer>
+   ```
+
+3. After generating the HTML with `--include-after-body footer.html`,
+   notice the contents are included before the `</body>` closing tag
+4. If using `--include-before-body` to add a site header,
+   you may need to amend the template file
+   since the default already contains a `<header>` element
