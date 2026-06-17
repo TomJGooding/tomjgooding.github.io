@@ -58,3 +58,19 @@ date: 2026-06-12
 4. If using `--include-before-body` to add a site header,
    you may need to amend the template file
    since the default already contains a `<header>` element
+5. Edit `template.html` to add the `<main>` element. For example:
+
+   ```html
+   <body>
+   $for(include-before)$
+   $include-before$
+   $endfor$
+   <main>
+   <!-- snip -->
+   $body$
+   </main>
+   $for(include-after)$
+   $include-after$
+   $endfor$
+   </body>
+   ```

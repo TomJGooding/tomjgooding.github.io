@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+<main>
 <header id="title-block-header">
 <h1 class="title">Creating a website with pandoc</h1>
 <p class="date">2026-06-12</p>
@@ -66,7 +67,23 @@ included before the <code>&lt;/body&gt;</code> closing tag</p></li>
 <li><p>If using <code>--include-before-body</code> to add a site header,
 you may need to amend the template file since the default already
 contains a <code>&lt;header&gt;</code> element</p></li>
+<li><p>Edit <code>template.html</code> to add the
+<code>&lt;main&gt;</code> element. For example:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>$for(include-before)$</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>$include-before$</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>$endfor$</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">main</span><span class="dt">&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- snip --&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>$body$</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">main</span><span class="dt">&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>$for(include-after)$</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>$include-after$</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>$endfor$</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span></code></pre></div></li>
 </ol>
+</main>
 <footer style="margin-top: 4em; text-align: center;">
     <hr>
     <p>Generated with pandoc</p>
