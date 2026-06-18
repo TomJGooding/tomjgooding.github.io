@@ -83,6 +83,42 @@ class="sourceCode html"><code class="sourceCode html"><span id="cb5-1"><a href="
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>$endfor$</span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span></code></pre></div></li>
 </ol>
+<h2 id="configure-publishing-source">Configure publishing source</h2>
+<p>The problem is that currently everything in the repository will be
+published, including files like <code>template.html</code> which
+shouldn’t be public.</p>
+<p><a
+href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site">Configure
+a publishing source</a> for your GitHub Pages site:</p>
+<ol type="1">
+<li><p>Change the source folder to <code>/docs</code> in your GitHub
+repository <strong>Pages</strong> settings</p></li>
+<li><p>Move <code>.nojekyll</code> and all public website files to a new
+<code>/docs</code> directory:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> docs</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> .nojekyll index.html style.css docs/</span></code></pre></div></li>
+</ol>
+<h2 id="add-directory-structure">Add directory structure</h2>
+<p>Organise other files into separate directories:</p>
+<pre><code>.
+├── content
+│   └── index.md
+├── docs
+│   ├── index.html
+│   └── style.css
+├── includes
+│   └── footer.html
+└── templates
+    └── template.html</code></pre>
+<h2 id="add-makefile">Add Makefile</h2>
+<pre><code>PANDOC_OPTS = --standalone \
+          --template templates/template.html \
+          --include-after-body includes/footer.html \
+          --css style.css
+
+docs/index.html: content/index.md
+    pandoc $(PANDOC_OPTS) $&lt; -o $@</code></pre>
 </main>
 <footer style="margin-top: 4em; text-align: center;">
     <hr>

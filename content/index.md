@@ -77,6 +77,12 @@ date: 2026-06-12
 
 ## Configure publishing source
 
+The problem is that currently everything in the repository will be published,
+including files like `template.html` which shouldn't be public.
+
+[Configure a publishing source](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
+for your GitHub Pages site:
+
 1. Change the source folder to `/docs` in your GitHub repository **Pages** settings
 2. Move `.nojekyll` and all public website files to a new `/docs` directory:
 
@@ -84,3 +90,32 @@ date: 2026-06-12
    mkdir docs
    mv .nojekyll index.html style.css docs/
    ```
+
+## Add directory structure
+
+Organise other files into separate directories:
+
+```
+.
+├── content
+│   └── index.md
+├── docs
+│   ├── index.html
+│   └── style.css
+├── includes
+│   └── footer.html
+└── templates
+    └── template.html
+```
+
+## Add Makefile
+
+```
+PANDOC_OPTS = --standalone \
+	      --template templates/template.html \
+	      --include-after-body includes/footer.html \
+	      --css style.css
+
+docs/index.html: content/index.md
+	pandoc $(PANDOC_OPTS) $< -o $@
+```
