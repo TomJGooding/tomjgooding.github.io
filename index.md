@@ -74,3 +74,13 @@ date: 2026-06-12
    $endfor$
    </body>
    ```
+
+## Configure publishing source
+
+1. Change the source folder to `/docs` in your GitHub repository **Pages** settings
+2. Move `.nojekyll` and all public website files to a new `/docs` directory:
+
+   ```sh
+   mkdir docs
+   mv .nojekyll index.html style.css docs/
+   ```
