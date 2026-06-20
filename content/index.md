@@ -110,12 +110,26 @@ Organise other files into separate directories:
 
 ## Add Makefile
 
+The `pandoc` command is becoming a bit unwieldly.
+
+Create a `Makefile` to help automate building the website:
+
 ```
+CONTENT_DIR = ./content
+OUTPUT_DIR = ./docs
+
+CONTENT = $(shell find $(CONTENT_DIR) -name '*.md')
+HTML = $(patsubst $(CONTENT_DIR)/%.md, $(OUTPUT_DIR)/%.html, $(CONTENT))
+
 PANDOC_OPTS = --standalone \
 	      --template templates/template.html \
 	      --include-after-body includes/footer.html \
 	      --css style.css
 
-docs/index.html: content/index.md
+.PHONY: build
+build: $(HTML)
+
+$(OUTPUT_DIR)/%.html: $(CONTENT_DIR)/%.md
+	@mkdir -p $(@D)
 	pandoc $(PANDOC_OPTS) $< -o $@
 ```

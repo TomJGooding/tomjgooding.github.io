@@ -112,12 +112,25 @@ class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#c
 └── templates
     └── template.html</code></pre>
 <h2 id="add-makefile">Add Makefile</h2>
-<pre><code>PANDOC_OPTS = --standalone \
+<p>The <code>pandoc</code> command is becoming a bit unwieldly.</p>
+<p>Create a <code>Makefile</code> to help automate building the
+website:</p>
+<pre><code>CONTENT_DIR = ./content
+OUTPUT_DIR = ./docs
+
+CONTENT = $(shell find $(CONTENT_DIR) -name &#39;*.md&#39;)
+HTML = $(patsubst $(CONTENT_DIR)/%.md, $(OUTPUT_DIR)/%.html, $(CONTENT))
+
+PANDOC_OPTS = --standalone \
           --template templates/template.html \
           --include-after-body includes/footer.html \
           --css style.css
 
-docs/index.html: content/index.md
+.PHONY: build
+build: $(HTML)
+
+$(OUTPUT_DIR)/%.html: $(CONTENT_DIR)/%.md
+    @mkdir -p $(@D)
     pandoc $(PANDOC_OPTS) $&lt; -o $@</code></pre>
 </main>
 <footer style="margin-top: 4em; text-align: center;">
