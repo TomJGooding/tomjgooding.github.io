@@ -6,7 +6,6 @@ HTML = $(patsubst $(CONTENT_DIR)/%.md, $(OUTPUT_DIR)/%.html, $(CONTENT))
 
 PANDOC_OPTS = --standalone \
 	      --template templates/template.html \
-	      --include-after-body includes/footer.html \
 	      --css style.css
 
 .PHONY: build

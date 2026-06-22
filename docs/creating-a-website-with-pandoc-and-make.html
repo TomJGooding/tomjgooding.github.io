@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="dcterms.date" content="2026-06-22" />
+  <title>Creating a website with pandoc and make</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main>
+<header id="title-block-header">
+<h1 class="title">Creating a website with pandoc and make</h1>
+<p class="date">2026-06-22</p>
+</header>
+<h2 id="getting-started">Getting started</h2>
+<ol type="1">
+<li><p>Create your <a
+href="https://docs.github.com/en/pages/quickstart">GitHub Pages
+website</a></p></li>
+<li><p>Add an empty <code>.nojekyll</code> file to bypass Jekyll
+processing</p></li>
+<li><p>Create <code>index.md</code> with Markdown content</p></li>
+<li><p>Convert to HTML:
+<code>pandoc index.md -o index.html --standalone</code></p></li>
+<li><p>Print the default HTML template with
+<code>pandoc --print-default-template html</code>. Notice the use of
+variables like title, author, date, etc.</p></li>
+<li><p>Add a metadata block at the top of <code>index.md</code>. For
+example:</p>
+<pre><code>---
+title: &quot;Creating a website with pandoc&quot;
+date: 2026-06-22
+---</code></pre></li>
+</ol>
+<h2 id="add-custom-template-and-css">Add custom template and CSS</h2>
+<ol type="1">
+<li><p>Output the default HTML template to a file:</p>
+<pre><code>pandoc -o template.html --print-default-template html</code></pre></li>
+<li><p>Edit <code>template.html</code> and remove the
+<code>&lt;style&gt;</code> block</p></li>
+<li><p>Create <code>style.css</code> with your custom
+stylesheet</p></li>
+<li><p>Generate the HTML using the custom template and CSS
+stylesheet:</p>
+<pre><code>pandoc index.md -o index.html --standalone --template template.html --css style.css</code></pre></li>
+</ol>
+<h2 id="add-header-and-footer">Add header and footer</h2>
+<ol type="1">
+<li><p>The <code>--include-before-body</code> and
+<code>--include-after-body</code> options can be used to add a site
+header and footer</p></li>
+<li><p>Create <code>footer.html</code> with HTML content. For
+example:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">footer</span><span class="ot"> style</span><span class="op">=</span><span class="st">&quot;margin-top: 4em; text-align: center;&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">hr</span><span class="dt">&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Generated with pandoc<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">footer</span><span class="dt">&gt;</span></span></code></pre></div></li>
+<li><p>After generating the HTML with
+<code>--include-after-body footer.html</code>, notice the contents are
+included before the <code>&lt;/body&gt;</code> closing tag</p></li>
+<li><p>If using <code>--include-before-body</code> to add a site header,
+you may need to amend the template file since the default already
+contains a <code>&lt;header&gt;</code> element</p></li>
+<li><p>Edit <code>template.html</code> to add the
+<code>&lt;main&gt;</code> element. For example:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>$for(include-before)$</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>$include-before$</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>$endfor$</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">main</span><span class="dt">&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- snip --&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>$body$</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">main</span><span class="dt">&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>$for(include-after)$</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>$include-after$</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>$endfor$</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span></code></pre></div></li>
+</ol>
+<h2 id="configure-publishing-source">Configure publishing source</h2>
+<p>The problem is that currently everything in the repository will be
+published, including files like <code>template.html</code> which
+shouldn’t be public.</p>
+<p><a
+href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site">Configure
+a publishing source</a> for your GitHub Pages site:</p>
+<ol type="1">
+<li><p>Change the source folder to <code>/docs</code> in your GitHub
+repository <strong>Pages</strong> settings</p></li>
+<li><p>Move <code>.nojekyll</code> and all public website files to a new
+<code>/docs</code> directory:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> docs</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> .nojekyll index.html style.css docs/</span></code></pre></div></li>
+</ol>
+<h2 id="add-directory-structure">Add directory structure</h2>
+<p>Organise other files into separate directories:</p>
+<pre><code>.
+├── content
+│   └── index.md
+├── docs
+│   ├── index.html
+│   └── style.css
+├── includes
+│   └── footer.html
+└── templates
+    └── template.html</code></pre>
+<h2 id="add-makefile">Add Makefile</h2>
+<p>The <code>pandoc</code> command is becoming a bit unwieldly.</p>
+<p>Create a <code>Makefile</code> to help automate building the
+website:</p>
+<pre><code>CONTENT_DIR = ./content
+OUTPUT_DIR = ./docs
+
+CONTENT = $(shell find $(CONTENT_DIR) -name &#39;*.md&#39;)
+HTML = $(patsubst $(CONTENT_DIR)/%.md, $(OUTPUT_DIR)/%.html, $(CONTENT))
+
+PANDOC_OPTS = --standalone \
+          --template templates/template.html \
+          --include-after-body includes/footer.html \
+          --css style.css
+
+.PHONY: build
+build: $(HTML)
+
+$(OUTPUT_DIR)/%.html: $(CONTENT_DIR)/%.md
+    @mkdir -p $(@D)
+    pandoc $(PANDOC_OPTS) $&lt; -o $@</code></pre>
+</main>
+</body>
+</html>
