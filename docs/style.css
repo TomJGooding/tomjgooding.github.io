@@ -12,5 +12,22 @@ body {
 code {
   font-family: monospace;
   font-size: 85%;
+  background: light-dark(#f8f8f8, #282c34);
+  padding: .2em .4em;
+  border-radius: 6px;
   white-space: pre-wrap;
+  hyphens: manual;
+}
+
+pre {
+  background: light-dark(#f8f8f8, #282c34);
+  padding: 1em;
+  border-radius: 6px;
+  overflow: auto;
+}
+
+pre code {
+  padding: 0;
+  overflow: visible;
+  overflow-wrap: normal;
 }
